@@ -7,7 +7,7 @@
                    
      ckaestne                                                                
      ====================================================================== -->
-<project name="test_fstgen" default="testAlloy">
+<project name="test_fstgen" default="testFormolWM">
 	<echo>${java.class.path}</echo>
 	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
@@ -28,8 +28,18 @@
 		</classpath>
 	</taskdef>
 	
-	<target name="all" depends="testFJ,testJava,testJavaMerge,testJak,testCSharp,testC,testHaskell,testJavaCC,testAlloy"></target>
+	<target name="all" depends="testFormolWM,testFJ,testJava,testJavaMerge,testJak,testCSharp,testC,testHaskell,testJavaCC,testAlloy"></target>
 
+	<target name="testFormolWM">
+		<antcall target="testGrammar">
+			<param name="language" value="formolwm" />
+			<param name="parserClass" value="FORMOLParser" />
+			<param name="mainProduction" value="WordModel" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.fml" />
+		</antcall>
+	</target>
+	
 	<target name="testFJ">
 		<antcall target="testGrammar">
 			<param name="language" value="fj" />
